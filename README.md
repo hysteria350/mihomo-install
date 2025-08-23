@@ -63,6 +63,8 @@ rules:
   - MATCH,🚀 节点选择
 ```
 
+更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
+
 ## 启动与设置为开机自启动
 
 开机自启动
