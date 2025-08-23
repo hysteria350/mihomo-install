@@ -1,0 +1,230 @@
+# 官方参考配置 https://github.com/MetaCubeX/mihomo/blob/Alpha/docs/config.yaml
+# 官方配置详解 https://wiki.metacubex.one/config/
+
+mixed-port: 7890
+allow-lan: false
+bind-address: '*'
+# 若非 always, SUB-RULE 不生效
+find-process-mode: always
+mode: rule
+geox-url:
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+geo-auto-update: true
+# 单位为小时
+geo-update-interval: 24
+log-level: error
+ipv6: false
+external-controller: 127.0.0.1:9090
+secret: ""
+external-controller-cors:
+  allow-origins:
+    - '*'
+  allow-private-network: false
+external-ui: ui
+external-ui-url: 'https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+# external-ui-url: 'https://ghproxy.net/https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip'
+global-client-fingerprint: chrome
+profile:
+  store-selected: true
+  store-fake-ip: true
+unified-delay: true
+tcp-concurrent: true
+geodata-mode: true
+geodata-loader: standard
+
+dns:
+  enable: true
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: false
+  respect-rules: false
+  listen: 0.0.0.0:10053
+  ipv6: false
+  enhanced-mode: redir-host
+  # 更多 DNS 参考: https://senzyo.net/2022-22/
+  default-nameserver:
+    - 'udp://1.2.4.8'
+  nameserver-policy:
+  # 为 proxy-provider 使用的域名指定 DNS 服务器, 不然无法下载订阅文件
+    '+.pronetwork.top,+.wd-turbo.com': ['https://dns.alidns.com/dns-query']
+    'geosite:geolocation-!cn': ['https://8.8.8.8/dns-query#🚀 默认出站']
+    'geosite:cn': ['https://dns.alidns.com/dns-query']
+  nameserver:
+    - 'https://8.8.8.8/dns-query#🚀 默认出站'
+  proxy-server-nameserver:
+    - 'https://dns.alidns.com/dns-query'
+
+sniffer:
+  enable: false
+  force-dns-mapping: true
+  parse-pure-ip: false
+  override-destination: false
+
+tun:
+  enable: true
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - 'udp://any:53'
+    - 'tcp://any:53'
+  strict_route: true
+  endpoint-independent-nat: false
+  exclude-package:
+    - 'com.android.captiveportallogin'
+    - 'org.localsend.localsend_app'
+
+urltest: &urltest
+  type: url-test
+  disable-udp: false
+  url: 'https://www.gstatic.com/generate_204'
+  # 单位为秒, 仅影响 proxies 下的节点
+  interval: 600
+  # 单位为毫秒
+  timeout: 2000
+  # 单位为毫秒
+  tolerance: 10
+  lazy: false
+  expected-status: 204
+  use:
+    - 'Provider1'
+
+select1: &select1
+  type: select
+  disable-udp: false
+  proxies:
+    - '🚀 默认出站'
+    - 'DIRECT'
+    - '📌 单选节点'
+    - '🇭🇰 香港节点'
+    - '🇯🇵 日本节点'
+    - '🇰🇷 韩国节点'
+    - '🇹🇼 台湾节点'
+    - '🇸🇬 新加坡节点'
+    - '🇺🇸 美国节点'
+
+proxy-groups:
+  - name: '🚀 默认出站'
+    type: select
+    disable-udp: false
+    proxies:
+      - '🌏 日韩台新'
+      - '📌 单选节点'
+      - '🇭🇰 香港节点'
+      - '🇯🇵 日本节点'
+      - '🇰🇷 韩国节点'
+      - '🇹🇼 台湾节点'
+      - '🇸🇬 新加坡节点'
+      - '🇺🇸 美国节点'
+  - name: '🌏 日韩台新'
+    filter: '🇯🇵|日本|JP|Japan|🇰🇷|韩国|KR|South Korea|🇹🇼|台湾|TW|Taiwan|🇸🇬|新加坡|SG|Singapore'
+    <<: *urltest
+  - name: '📌 单选节点'
+    type: select
+    disable-udp: false
+    exclude-filter: '剩余|流量|raffic|有效|时间|到期|xpire|地址|网址|官网|自动|最优|最快'
+    use:
+      - 'Provider1'
+  - name: '📥 Downloader'
+    <<: *select1
+  - name: '🎮 Game'
+    <<: *select1
+  - name: '🔎 Google'
+    <<: *select1
+  - name: '☁️ OneDrive'
+    <<: *select1
+  - name: '🤖 OpenAI'
+    <<: *select1
+  - name: '🪟 Microsoft'
+    <<: *select1
+  - name: '🖥️ SSH'
+    <<: *select1
+  - name: '🇭🇰 香港节点'
+    filter: '🇭🇰|香港|HK|Hong Kong'
+    <<: *urltest
+  - name: '🇯🇵 日本节点'
+    filter: '🇯🇵|日本|JP|Japan'
+    <<: *urltest
+  - name: '🇰🇷 韩国节点'
+    filter: '🇰🇷|韩国|KR|South Korea'
+    <<: *urltest
+  - name: '🇹🇼 台湾节点'
+    filter: '🇹🇼|台湾|TW|Taiwan'
+    <<: *urltest
+  - name: '🇸🇬 新加坡节点'
+    filter: '🇸🇬|新加坡|SG|Singapore'
+    <<: *urltest
+  - name: '🇺🇸 美国节点'
+    filter: '🇺🇸|美国|US|USA|United States'
+    <<: *urltest
+
+rules:
+  # geoip.dat 类别: https://github.com/Loyalsoldier/geoip/tree/release/text
+  # geosite.dat 类别: 
+  # https://github.com/v2fly/domain-list-community/tree/master/data
+  # https://github.com/MetaCubeX/meta-rules-dat?tab=readme-ov-file#geositedatgeositedb-内容
+  - GEOIP,private,DIRECT,no-resolve
+  - PROCESS-NAME,localsend,DIRECT
+  - PROCESS-NAME,localsend_app.exe,DIRECT
+  - SUB-RULE,(PROCESS-NAME,ssh),ssh
+  - SUB-RULE,(PROCESS-NAME,ssh.exe),ssh
+  - SUB-RULE,(PROCESS-NAME,ssh-agent.exe),ssh
+  - DOMAIN-SUFFIX,copymanga.site,🚀 默认出站
+  - DOMAIN-SUFFIX,copymanga.tv,🚀 默认出站
+  - DOMAIN-SUFFIX,mangafuna.xyz,🚀 默认出站
+  - DOMAIN-SUFFIX,mangafunb.fun,🚀 默认出站
+  - DOMAIN-SUFFIX,senzyo.net,🚀 默认出站
+  - SUB-RULE,(RULE-SET,downloader),downloader
+  - GEOSITE,category-games@cn,DIRECT
+  - GEOSITE,category-games,🎮 Game
+  - GEOSITE,google,🔎 Google
+  - GEOIP,google,🔎 Google,no-resolve
+  - GEOSITE,onedrive,☁️ OneDrive
+  - GEOSITE,openai,🤖 OpenAI
+  - GEOSITE,microsoft,🪟 Microsoft
+  - GEOSITE,geolocation-!cn,🚀 默认出站
+  - GEOSITE,cn,DIRECT
+  - GEOIP,cn,DIRECT,no-resolve
+  - MATCH,🚀 默认出站
+sub-rules:
+  downloader:
+    - GEOSITE,cn,DIRECT
+    - GEOIP,cn,DIRECT,no-resolve
+    - MATCH,📥 Downloader
+  ssh:
+    - GEOSITE,cn,DIRECT
+    - GEOIP,cn,DIRECT,no-resolve
+    - MATCH,🖥️ SSH
+
+proxy-providers:
+  Provider1:
+    type: http
+    url: "https://example.com"
+    path: ./proxy_providers/Provider1.yaml
+    # 单位为秒
+    interval: 86400
+    proxy: DIRECT
+    health-check:
+      enable: true
+      url: 'https://www.gstatic.com/generate_204'
+      # 单位为秒, 仅影响 proxy-group 中 use 下的节点
+      interval: 600
+      # 单位为毫秒
+      timeout: 2000
+      lazy: false
+      expected-status: 204
+    override:
+      udp: true
+      up: '30 Mbps'
+      down: '90 Mbps'
+
+rule-providers:
+  downloader:
+    type: http
+    url: 'https://gitlab.com/senzyo_sama/as-gist/-/raw/master/Rule/Clash/downloader.yaml'
+    path: ./rule-providers/downloader.yaml
+    # 单位为秒
+    interval: 604800
+    behavior: classical
+    format: yaml
