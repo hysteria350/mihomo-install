@@ -16,7 +16,7 @@ Mihomo 是由 MetaCubeX 团队发布的 Clash.Meta 核心的官方构建版本�
 
 GitHub 官方地址：<https://github.com/MetaCubeX/mihomo>
 
-根据操作系统类型，下载相应的 mihomo 版本，本文实验环境为windows， cpu为x86-64架构所以下载的版本为 mihomo-windows-amd64.exe。
+根据操作系统类型，下载相应的 mihomo 版本，本文实验环境为windows， cpu为x86-64架构所以下载的版本为 [mihomo-windows-amd64.exe](https://github.com/MetaCubeX/mihomo/releases/download/v1.19.12/mihomo-windows-amd64-v3-v1.19.12.zip)。
 
 ## 配置文件
 
