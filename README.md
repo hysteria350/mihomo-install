@@ -22,7 +22,7 @@ GitHub 官方地址：<https://github.com/MetaCubeX/mihomo>
 
 创建 mihomo 工作目录, 比如 C:\Users\<UserName>\Apps\mihomo。 放入配置文件 config.yaml。
 参考以下配置:
-
+> 更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
 ```yaml
 port: 7890
 socks-port: 7891
@@ -62,8 +62,6 @@ rules:
   - GEOIP,CN,DIRECT
   - MATCH,🚀 节点选择
 ```
-
-更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
 
 ## 启动与设置为开机自启动
 
