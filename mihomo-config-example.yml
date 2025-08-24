@@ -125,7 +125,14 @@ unified-delay: true
 # 同时对所有ip进行连接，返回延迟最低的地址
 tcp-concurrent: true
 # 外部控制端口
-external-controller: :9090
+external-controller: 0.0.0.0:9090
+external-ui: ui
+# 如果本地可以直接访问github则直接通过github下载UI
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+# 如果本地不能直接访问github则通过代理下载UI
+# external-ui-url: 'https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+secret: "yyhhyyyyyy"
+
 
 geodata-mode: true
 
