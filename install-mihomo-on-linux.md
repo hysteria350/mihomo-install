@@ -46,6 +46,8 @@ user@server$ sudo systemctl enable --now mihomo
 
 将配置文件 config.yaml 放到 Mihomo 同目录下，参考以下配置:
 
+>  更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
+
 ```yaml
 port: 7890
 socks-port: 7891
@@ -85,8 +87,6 @@ rules:
   - GEOIP,CN,DIRECT
   - MATCH,🚀 节点选择
 ```
-
-更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
 
 ## 启动与设置为开机自启动
 
