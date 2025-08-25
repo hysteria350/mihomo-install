@@ -42,7 +42,9 @@ user@server$ sudo systemctl enable --now mihomo
 
 ## 配置文件
 
-将配置文件 config.yaml 放到 Mihomo 同目录下，参考以下配置:
+先进行[订阅购买]() ，获取到订阅链接。订阅链接位于：仪表盘 > 一键订阅 , 然后复制订阅地址, 后面配置文件需要使用到。
+
+参考以下配置修改/etc/mihomo/config.yaml， 将以下配置中，订阅一的url替换成自己购买的订阅地址。
 
 >  更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
 
@@ -97,7 +99,7 @@ proxy-providers:
   订阅一:
     <<: *p
     # path: ./proxy_provider/订阅一.yaml
-    url: "https://vip07.stableconnect.cloud/api/v1/client/subscribe?token=51b0f90deeb26ba745de2e60959583c8"
+    url: "https://example.com/subscribe?token=xxxxxx"
     # 如需要为该订阅组节点添加前缀，取消下面两行注释
     # override:
       # additional-prefix: "[订阅一]"
@@ -128,8 +130,18 @@ rules:
   - MATCH,节点选择
 ```
 
-
 ## 安装控制面板
+
+控制面板已由external-ui-url属性指定, mihomo会根据的url下载指定的控制面板， 网络状况不佳可以通过代理， 例如：ghfast.top 下载。
+
+```code
+# 如果本地可以直接访问github则直接通过github下载UI
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+# 如果本地不能直接访问github则通过代理下载UI
+# external-ui-url: 'https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+# metacubexd theme
+# external-ui-url: https://ghfast.top/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+```
 
 现在重新mihomo服务， 测试一下整个流程, 应该一切正常。现在可以打开 Dashboard: <http://127.0.0.1:9090/ui> 查看相应信息并进行管理。
 
