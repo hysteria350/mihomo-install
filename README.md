@@ -23,6 +23,7 @@ GitHub 官方地址：<https://github.com/MetaCubeX/mihomo>
 创建 mihomo 工作目录, 比如 C:\Users\<UserName>\Apps\mihomo。 放入配置文件 config.yaml。
 参考以下配置:
 > 更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
+
 ```yaml
 port: 7890
 socks-port: 7891
@@ -30,9 +31,12 @@ allow-lan: true
 mode: rule
 log-level: info
 
-external-controller: 127.0.0.1:9090
+# 外部控制端口
+external-controller: 0.0.0.0:9090
 external-ui: ui
-secret: ""
+# 如果本地可以直接访问github则直接通过github下载UI
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+secret: "yyhhyyyyyy"
 
 dns:
   enable: true
@@ -42,25 +46,64 @@ dns:
     - 1.1.1.1
     - 8.8.8.8
 
-proxies:
-  - name: 🇯🇵 日本节点
-    type: vmess
-    server: jp.example.com
-    port: 443
-    uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-    cipher: auto
-    tls: true
+# 延迟检测 URL
+p: &p
+  type: http
+  # 自动更新订阅时间，单位为秒
+  interval: 3600
+  health-check:
+    enable: true
+    url: https://cp.cloudflare.com
+    # 节点连通性检测时间，单位为秒
+    interval: 300
+    # 节点超时延迟，单位为毫秒
+    timeout: 1000
+    # 节点自动切换差值，单位为毫秒
+    tolerance: 100
+
+# 订阅名，记得修改成自己的
+# 添删订阅在这里和下方订阅链接依葫芦画瓢就行
+use: &use
+  # 如果不希望自动切换请将下面两行注释对调
+  # type: select
+  type: url-test
+  use:
+    - 订阅一
+    # - 本地配置
+
+proxy-providers:
+  订阅一:
+    <<: *p
+    # path: ./proxy_provider/订阅一.yaml
+    url: "https://www.example.com/subscribe?token=51b0f90deeb26ba745de2e60959583c8"
+    # 如需要为该订阅组节点添加前缀，取消下面两行注释
+    # override:
+      # additional-prefix: "[订阅一]"
+
+# proxies:
+#  - name: 🇯🇵 日本节点
+#    type: vmess
+#    server: jp.example.com
+#    port: 443
+#    uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#    cipher: auto
+#    tls: true
 
 proxy-groups:
-  - name: 🚀 节点选择
-    type: select
-    proxies:
-      - 🇯🇵 日本节点
+  # 使用 WARP 的用户需要手动在下方的 proxies 字段内添加 WARP
+  # 例如 [WARP, 全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
+  - {
+      name: 节点选择,
+      type: select,
+      proxies:
+        [全部节点],
+    }
+  - { name: 全部节点, <<: *use }
 
 rules:
-  - DOMAIN-SUFFIX,google.com,🚀 节点选择
+  - DOMAIN-SUFFIX,google.com,节点选择
   - GEOIP,CN,DIRECT
-  - MATCH,🚀 节点选择
+  - MATCH,节点选择
 ```
 
 ## 启动与设置为开机自启动
