@@ -140,7 +140,7 @@ external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/downloa
 # 如果本地不能直接访问github则通过代理下载UI
 # external-ui-url: 'https://ghfast.top/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
 # metacubexd theme
-# external-ui-url: https://ghfast.top/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+# external-ui-url: 'https://ghfast.top/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
 ```
 
 现在重新mihomo服务， 测试一下整个流程, 应该一切正常。现在可以打开 Dashboard: <http://127.0.0.1:9090/ui> 查看相应信息并进行管理。
