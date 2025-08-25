@@ -20,7 +20,9 @@ GitHub 官方地址：<https://github.com/MetaCubeX/mihomo>
 
 ## 配置文件
 
-创建 mihomo 工作目录, 比如 C:\Users\<UserName>\Apps\mihomo。 放入配置文件 config.yaml。
+先进行 [订阅购买](https://shortlink181.github.io/1) ，获取到订阅链接。订阅链接位于：仪表盘 > 一键订阅 , 然后复制订阅地址, 后续配置需要用到。
+
+创建 mihomo 工作目录, 比如 C:\Users\<UserName>\Apps\mihomo。 放入配置文件 config.yaml。将配置中订阅一的url替换成自己购买的订阅的url。
 参考以下配置:
 > 更多配置选项参考 [mihomo-config-example.yml](mihomo-config-example.yml)
 
