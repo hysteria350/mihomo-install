@@ -40,8 +40,6 @@ user@server$ sudo systemctl enable --now mihomo
 
 ```
 
-
-
 ## 配置文件
 
 将配置文件 config.yaml 放到 Mihomo 同目录下，参考以下配置:
@@ -66,15 +64,23 @@ dns:
   nameserver:
     - 1.1.1.1
     - 8.8.8.8
+proxy-providers:
+  订阅一:
+    <<: *p
+    # path: ./proxy_provider/订阅一.yaml
+    url: "https://example.com/airport?token=xxxxxxx"
+    # 如需要为该订阅组节点添加前缀，取消下面两行注释
+    # override:
+      # additional-prefix: "[订阅一]"
 
-proxies:
-  - name: 🇯🇵 日本节点
-    type: vmess
-    server: jp.example.com
-    port: 443
-    uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-    cipher: auto
-    tls: true
+# proxies:
+#  - name: 🇯🇵 日本节点
+#    type: vmess
+#    server: jp.example.com
+#    port: 443
+#    uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#    cipher: auto
+#    tls: true
 
 proxy-groups:
   - name: 🚀 节点选择
@@ -82,32 +88,27 @@ proxy-groups:
     proxies:
       - 🇯🇵 日本节点
 
+# 外部控制端口
+external-controller: 0.0.0.0:9090
+external-ui: ui
+# 如果本地可以直接访问github则直接通过github下载UI
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+secret: "yyhhyyyyyy"
+
 rules:
   - DOMAIN-SUFFIX,google.com,🚀 节点选择
   - GEOIP,CN,DIRECT
   - MATCH,🚀 节点选择
 ```
 
-## 启动与设置为开机自启动
-
-
-
-开机自启动
-
 
 ## 安装控制面板
 
-下载 [Yacd-meta](https://ghproxy.net/https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip) 或者 [MetaCubeXD](https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip), 解压后将文件夹重命名为 ui, 移动到 mihomo 工作目录下: C:\Users\<UserName>\Apps\mihomo\ui。
+现在重新mihomo服务， 测试一下整个流程, 应该一切正常。现在可以打开 Dashboard: <http://127.0.0.1:9090/ui> 查看相应信息并进行管理。
 
-现在可以运行 任务计划程序 或 Windows 服务 测试一下整个流程, 应该一切正常。现在可以打开 Dashboard: <http://127.0.0.1:9090/ui> 查看相应信息并进行管理。
-
-> 智能多宿主名称解析与防火墙
-> 注意, 在 Windows 中, 如果在 TUN 配置中启用了严格路由,
-> 
-> 1. 不必手动启用组策略中 计算机配置→管理模板→网络→DNS 客户端→禁用智能多宿主名称解析 这一策略了, 保持这一策略为 未配置/已禁用 即可。
-> 2. 不必手动为 mihomo 配置 Windows 防火墙, mihomo 会自动配置的。
-> 3. 不然, 你会发现虽然测速延迟还可以, 但实际速度很慢。
-> 4. 由于 mihomo 和 sing-box 都使用 sing-tun, 所以上述注意事项同样适用于 sing-box。
+```bash
+systemctl restart mihomo
+```
 
 ## 参考文档
 
