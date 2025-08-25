@@ -37,8 +37,8 @@ log-level: info
 external-controller: 0.0.0.0:9090
 external-ui: ui
 # 如果本地可以直接访问github则直接通过github下载UI
-external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
-secret: "yyhhyyyyyy"
+# external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+secret: ""
 
 dns:
   enable: true
