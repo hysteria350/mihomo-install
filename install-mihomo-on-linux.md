@@ -108,10 +108,12 @@ proxy-providers:
 #  - name: 🇯🇵 日本节点
 #    type: vmess
 #    server: jp.example.com
-#    port: 443
+#    port: 38801
 #    uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#    alterId: 0
 #    cipher: auto
 #    tls: true
+#    udp: true
 
 proxy-groups:
   # 使用 WARP 的用户需要手动在下方的 proxies 字段内添加 WARP
