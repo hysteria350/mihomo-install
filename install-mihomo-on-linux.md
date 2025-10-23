@@ -42,7 +42,7 @@ user@server$ sudo systemctl enable --now mihomo
 
 ## 配置文件
 
-先进行[订阅购买](https://shortlink.20250812.xyz/1) ，获取到订阅链接。订阅链接位于：仪表盘 > 一键订阅 , 然后复制订阅地址, 后面配置文件需要使用到。
+先进行[订阅购买](https://github.com/proxyguide/jichang-recommend) ，获取到订阅链接。订阅链接位于：仪表盘 > 一键订阅 , 然后复制订阅地址, 后面配置文件需要使用到。
 
 参考以下配置修改/etc/mihomo/config.yaml， 将以下配置中，订阅一的url替换成自己购买的订阅地址。
 
